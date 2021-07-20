@@ -7,9 +7,15 @@ from django.contrib.auth.models import User
 class UploadModelForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ('image',)
+        fields = ('name','description','image','image1','image2','image3','tag')
         widgets = {
-            'image': forms.FileInput(attrs={'id': 'avatarSlect'})
+            'name':forms.TextInput(attrs={'id':'name','size': 10 , 'title': 'Your name'}),
+            'description':forms.TextInput(attrs={'id': 'description'}),
+            'tag':forms.TextInput(attrs={'id': 'tag'}),    
+            'image': forms.FileInput(attrs={'id': 'avatarSlect'}),
+            'image1': forms.FileInput(attrs={'id': 'avatarSlect1'}),
+            'image2': forms.FileInput(attrs={'id': 'avatarSlect2'}),
+            'image3': forms.FileInput(attrs={'id': 'avatarSlect3'}),
         }
 
 class LoginForm(forms.Form):

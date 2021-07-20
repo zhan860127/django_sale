@@ -42,9 +42,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'practice.apps.PracticeConfig',
     'postimage.apps.PostimageConfig',  #應用程式的設定檔類別
-    'super_resolution.apps.SuperResolutionConfig'
+    'super_resolution.apps.SuperResolutionConfig',
+    
+        'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # google provider
+    'allauth.socialaccount.providers.google',
+        'allauth.socialaccount.providers.facebook',
+    'sslserver',
 
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -90,8 +100,12 @@ WSGI_APPLICATION = 'potrip.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  #PostgreSQL
+        'NAME': 'admin',  #資料庫名稱
+        'USER': 'postgres',  #資料庫帳號
+        'PASSWORD': 'tony860127',  #資料庫密碼
+        'HOST': 'localhost',  #Server(伺服器)位址
+        'PORT': '5432'  #PostgreSQL Port號
     }
 }
 
@@ -159,3 +173,44 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIALACCOUNT_PROVIDERS = \
+    {'facebook':
+       {'METHOD': 'oauth2',
+        'SCOPE': ['email','public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time'],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'kr_KR',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4'}}
+
+#facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '2937740549833082'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET ='f4f1fe46a737ced12fcc332fae9c9831' #app key
+
+LOGIN_REDIRECT_URL = 'https://127.0.0.1:8000/postimage/'  # 登入後的首頁網址
+
+SITE_ID = 1
+
+#site id
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_USERNAME_REQURIED=True
+
+
