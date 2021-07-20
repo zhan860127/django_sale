@@ -5,6 +5,7 @@ from postimage import views as homeViews
 from django.conf.urls import url
 from django.conf.urls import url
 from django.contrib import admin
+from django.urls import path, include
 
 from django.urls import path,re_path
 
@@ -18,6 +19,7 @@ urlpatterns = [
     path('logout', views.log_out, name='logout'),
 
     path('login', views.sign_in, name='Login'),
+    path('login',include('allauth.urls')),
     re_path(r'download/(?P<file_path>.*)/$', views.file_response_download1, name='file_download'),
 
 ]
