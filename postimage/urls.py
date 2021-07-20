@@ -5,6 +5,7 @@ from postimage import views as homeViews
 from django.conf.urls import url
 from django.conf.urls import url
 from django.contrib import admin
+from django.urls import path, include
 
 from django.urls import path,re_path
 
@@ -14,7 +15,11 @@ urlpatterns = [
     path('', views.index, name='Index'),
     url('upload_avatar/',homeViews.upload_avatar), # 上傳頭像
     url('upload',homeViews.upload,name='upload'), # 上傳頭像
+    url('register',homeViews.sign_up,name='register'),
+    path('logout', views.log_out, name='logout'),
 
+    path('login', views.sign_in, name='Login'),
+    path('login',include('allauth.urls')),
     re_path(r'download/(?P<file_path>.*)/$', views.file_response_download1, name='file_download'),
 
 ]

@@ -21,6 +21,7 @@ from django.conf import settings
 from django.views.static import serve
 from django.conf.global_settings import MEDIA_ROOT
 from postimage import views
+from django.urls import path, include
 
 
 
