@@ -10,6 +10,12 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.template.loader import get_template
+from cart.cart import Cart
+from .models import Photo
+from .models import Photo as Product
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 def log_out(request):
@@ -111,3 +117,30 @@ def sign_up(request):
         'form': form
     }
     return render(request, './register.html', context)
+
+
+
+def add_to_cart(request, product_id, quantity):
+    product = Product.objects.get(id=product_id)
+    cart = Cart(request)
+    cart.add(product, product.price, quantity)
+    return redirect('/postimage/cart/')
+
+def remove_from_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    cart = Cart(request)
+    cart.remove(product)
+    return redirect('/postimage/')
+
+
+def get_cart(request):
+    return render(request, 'cart.html', {'cart': Cart(request)})
+
+@csrf_exempt
+def update_cart(request, product_id, quantity):
+
+    product = Product.objects.get(id=product_id)
+    cart = Cart(request)
+    cart.update(product,quantity,product.price)
+    print("a")
+    return redirect('/postimage/cart/')

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<script src="{% static "/jquery-3.6.0.min.js"%}">
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+ 
+
+  <script>
+  $(document).ready(function() {
+ $('.table').find("tr:gt(0)").each(function() {
+
+	//為數量調整按鈕、刪除添加單擊事件，計算金額小計，並更新總計
+	$(this).click(function() {
+
+            var input = $(this).find(":text");
+var val = parseInt($(input).val());
+	if (isNaN(val) || (val < 1)) { val = 1; }
+
+	if ($(window.event.srcElement).hasClass("minus")) {
+       	    if (val > 1) val--;
+	    	input.val(val);
+  
+	    }
+	    else if ($(window.event.srcElement).hasClass("plus")) {
+	        if (val < 9999) val++;
+	    	input.val(val);
+	    }
+      console.log(val);
+var price=val;
+var a =  $(this).find('#t1');
+var s=$(a).html();
+
+
+url1="https://127.0.0.1:8000/postimage/update_cart/"+s+"/"+price+"/";
+
+console.log(url1);
+
+
+ (function($) {
+
+$.ajax({
+        type: 'POST',
+        url: url1,
+        success: function(){console.log("success");
+                //your code here
+        },
+        error: function(){console.log("success");
+                //your code here
+        }
+});})(jQuery);
+
+
+    });
+  
+
+  });
+  });
+    </script>
+ 
+
+
+
+
+
+
+    <table class="table">
+  <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>修改數量</th>
+            <th>移除購物車</th>
+            <th style="display:none">123</th>
+        </tr>
+  </thead>
+  <tbody>
+   {% for item in cart %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td id = "q">{{ item.quantity }}</td>
+            <td>{{ item.total_price }}</td>
+                     <td class="input-group">
+      
+
+ 
+    {% csrf_token %}
+
+  <span class="input-group-addon minus">-</span>
+  <input type="text" class="a" size="5" value={{ item.quantity }} >
+  <span class="input-group-addon plus">+</span>
+  
+ </td>
+        <td><a href="../removeitem/{{item.product.id}}/" class="card-link">Card link</a></td>
+       
+         <td style="display:none"><a id='t1' >{{item.product.id}}</a></td>   
+        </tr>
+        {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

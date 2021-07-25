@@ -2,6 +2,8 @@
 
 {% block upload %}
 {% load static %}
+
+
 <script src="{% static "/jquery-3.6.0.min.js"%}">
 console.log("22")
 </script>
@@ -80,6 +82,8 @@ $("#avatar").val(wuc);
 
     });  
 
+
+
  function imgShow(outerdiv, innerdiv, bigimg, _this){  
         var src = _this.attr("src");//獲取當前點選的pimg元素中的src屬性  
         $(bigimg).attr("src", src);//設定#bigimg元素的src屬性  
@@ -94,7 +98,7 @@ $("#avatar").val(wuc);
             var imgWidth, imgHeight;  
             var scale = 0.8;//縮放尺寸，當圖片真實寬度和高度大於視窗寬度和高度時進行縮放  
               
-            if(realHeight>windowH*scale) {//判斷圖片高度  
+           if(realHeight>windowH*scale) {//判斷圖片高度  
                 imgHeight = windowH*scale;//如大於視窗高度，圖片高度進行縮放  
                 imgWidth = imgHeight/realHeight*realWidth;//等比例縮放寬度  
                 if(imgWidth>windowW*scale) {//如寬度扔大於視窗寬度  
@@ -106,7 +110,9 @@ $("#avatar").val(wuc);
             } else {//如果圖片真實高度和寬度都符合要求，高寬不變  
                 imgWidth = realWidth;  
                 imgHeight = realHeight;  
-            }  
+            } 
+            imgWidth=400; 
+            imgHeight=400; 
                     $(bigimg).css("width",imgWidth);//以最終的寬度對圖片縮放  
               
             var w = (windowW-imgWidth)/3;//計算圖片與視窗左邊距  
@@ -137,8 +143,9 @@ jQuery("#toTop").addClass('fade-in');
 
 
 {% block content %}
+<div class="card-group">
 
-<div class="row" style="  display: flex;justify-content:center; align-items: center; ">
+<div class="row" style="  display: flex;justify-content:center; ">
 
     {% for i in photos %}
 
@@ -147,7 +154,7 @@ jQuery("#toTop").addClass('fade-in');
 
     <div class="card mt-4" style="width: 20rem;">
     <div class="test" style="  display: flex;justify-content:center; align-items: center; ">
-    <img src="{{ i.image.url }}" class="card-img-top" style="height: 18rem; width: 18rem;   display: flex;justify-content:center; align-items: center; ">
+    <img  src="{{ i.image.url }}"  style="height: 18rem; ">
     </div>
     
     
@@ -191,7 +198,7 @@ jQuery("#toTop").addClass('fade-in');
     <li class="list-group-item">價格 : {{i.price}}</li>
   </ul>
   <div class="card-body">
-    <a href="#" class="card-link">Card link</a>
+    <a href="additem/{{i.id}}/1/" class="card-link">Card link</a>
     <a href="#" class="card-link">Another link</a>
 
   </div>
@@ -200,6 +207,7 @@ jQuery("#toTop").addClass('fade-in');
     <a>{{i}}</a>
     {% endif %}
     {% endfor %}
+</div>
 </div>
 
 {% endblock  %}

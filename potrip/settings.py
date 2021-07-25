@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
         'allauth.socialaccount.providers.facebook',
     'sslserver',
-
+    'cart',
 ]
 SITE_ID = 1
 
@@ -212,5 +212,8 @@ SITE_ID = 1
 #site id
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_USERNAME_REQURIED=True
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 
