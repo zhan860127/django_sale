@@ -2,11 +2,9 @@ from django.shortcuts import render,redirect
 from .forms import UploadModelForm
 from .models import Photo
 from django.http.response import HttpResponse
-from django.http import StreamingHttpResponse
 from django.http import FileResponse  
 import os
-from django.http import HttpResponse, Http404, StreamingHttpResponse, FileResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse, Http404, FileResponse
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -15,8 +13,13 @@ from cart.cart import Cart
 from .models import Photo
 from .models import Photo as Product
 from django.views.decorators.csrf import csrf_exempt
+from .sample_create_order_ALL import main
+from cart.models import models
 
 
+@csrf_exempt
+def ecpay_view(request):
+    return HttpResponse(main(request))
 
 def log_out(request):
     logout(request)
@@ -120,11 +123,11 @@ def sign_up(request):
 
 
 
-def add_to_cart(request, product_id, quantity):
+def add_to_cart(request, product_id, quantity,user_id):
     product = Product.objects.get(id=product_id)
-    cart = Cart(request)
-    cart.add(product, product.price, quantity)
-    return redirect('/postimage/cart/')
+    cart = Cart(request,user_id)
+    cart.add(product, product.price, quantity,user_id)
+    return redirect('/postimage/cart/'+user_id)
 
 def remove_from_cart(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -133,8 +136,8 @@ def remove_from_cart(request, product_id):
     return redirect('/postimage/')
 
 
-def get_cart(request):
-    return render(request, 'cart.html', {'cart': Cart(request)})
+def get_cart(request,user_id):
+    return render(request, 'cart.html', {'cart': Cart(request,user_id)})
 
 @csrf_exempt
 def update_cart(request, product_id, quantity):

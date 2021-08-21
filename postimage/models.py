@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from cart.cart import models as model1
 
 class Photo(models.Model):
     name=models.CharField(blank=False, null=True,max_length=255)

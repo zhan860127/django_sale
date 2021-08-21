@@ -47,7 +47,11 @@
 
       </div>
     </div>
-  <div><a class="nav-link active" href="/postimage/cart/">購物車</a></div>
+            {% if request.user.is_authenticated %}
+            <div><a class="nav-link active" href="/postimage/cart/{{request.user}}">購物車</a></div>
+        
+        {% endif %}
+  
   </div>
 
   

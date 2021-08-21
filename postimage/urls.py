@@ -16,11 +16,11 @@ urlpatterns = [
     url('upload',homeViews.upload,name='upload'), # 上傳頭像
     url('register',homeViews.sign_up,name='register'),
     path('logout', views.log_out, name='logout'),
-    url(r'^cart/$', views.get_cart),
-    url(r'^additem/(\d+)/(\d+)/$', views.add_to_cart, name='additem-url'),
+    url(r'^cart/(\w+)$', views.get_cart),
+    url(r'^additem/(\d+)/(\d+)/(\w+)/$', views.add_to_cart, name='additem-url'),
     url(r'^removeitem/(\d+)/$', views.remove_from_cart, name='removeitem-url'),
     url(r'^update_cart/(\d+)/(\d+)/$', views.update_cart, name='update_cart-url'),
-
+    path('ecpay/',views.ecpay_view),
     path('login', views.sign_in, name='Login'),
     path('login',include('allauth.urls')),
     re_path(r'download/(?P<file_path>.*)/$', views.file_response_download1, name='file_download'),
