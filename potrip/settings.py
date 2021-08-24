@@ -53,6 +53,8 @@ INSTALLED_APPS = [
         'allauth.socialaccount.providers.facebook',
     'sslserver',
     'cart',
+    'storages',
+
 ]
 SITE_ID = 1
 
@@ -146,7 +148,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -170,6 +171,7 @@ TEMPLATES = [
 ]
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -216,4 +218,18 @@ ACCOUNT_USERNAME_REQURIED=True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3ManifestStaticStorage'
+
+AWS_ACCESS_KEY_ID = 'AKIAVJLRCS2IVPXQQ5GV'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'tonystorage'
+WS_S3_FILE_OVERWRITE = True  #同名檔案是否要覆寫
+AWS_DEFAULT_ACL = None
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3ManifestStaticStorage' #上傳的媒體檔案
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = '/media/'
 
