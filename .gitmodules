@@ -1,0 +1,3 @@
+[submodule "ECPayAIO_Python"]
+	path = ECPayAIO_Python
+	url = https://github.com/ECPay/ECPayAIO_Python.git
